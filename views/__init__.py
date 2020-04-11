@@ -1,4 +1,5 @@
 from app import app,db
+from datetime import datetime,timedelta
 from flask import render_template,session,redirect,url_for,request,jsonify,flash
 from flask_login import LoginManager,UserMixin,login_user,login_required,logout_user,current_user
 from models import User,Posts,PostLike,Comments
@@ -93,6 +94,7 @@ def register():
 		password = request.form['password']
 		email = request.form['email']
 		color = randomcolor()
+		created = datetime.now()+timedelta(hours = 5,minutes = 30)
 		account = User.query.filter_by(username = username).all()
 		accountemail = User.query.filter_by(email = email).all()
 		if account:
@@ -111,7 +113,7 @@ def register():
 			msg = 'Please fill out the form!'
 			return jsonify({'message':msg})
 		else:
-			new_user = User(username = username,password = password,email = email,color=color)
+			new_user = User(username = username,password = password,email = email,color=color,created = created)
 			db.session.add(new_user)
 			db.session.commit()
 			email = new_user.email
@@ -145,8 +147,9 @@ def posts():
 		title = request.form['title']
 		content =  request.form['content']
 		author = user_val
+		created = datetime.now()+timedelta(hours = 5,minutes = 30)
 		user = User.query.filter_by(username = user_val).first()
-		new_post = Posts(title = title,content = content,author = author,owner = user)
+		new_post = Posts(title = title,content = content,author = author,owner = user,created = created)
 		db.session.add(new_post)
 		db.session.commit()
 		return redirect('/posts')
@@ -162,8 +165,9 @@ def home(cur_user):
 		title = request.form['title']
 		content =  request.form['content']
 		author = user_val
+		created = datetime.now()+timedelta(hours = 5,minutes = 30)
 		user = User.query.filter_by(username = user_val).first()
-		new_post = Posts(title = title,content = content,author = author,owner = user)
+		new_post = Posts(title = title,content = content,author = author,owner = user,created = created)
 		db.session.add(new_post)
 		db.session.commit()
 		return redirect('/home/%s'%(user_val,))
@@ -209,7 +213,8 @@ def comment(id):
 		content = request.form['content']
 		author = user_val
 		color = user.color
-		comment = Comments(content = content,author = author,post = post,color = color)
+		created = datetime.now()+timedelta(hours = 5,minutes = 30)
+		comment = Comments(content = content,author = author,post = post,color = color,created = created)
 		db.session.add(comment)
 		db.session.commit()
 		return redirect('/comments')
@@ -226,12 +231,11 @@ def comments():
 @app.route('/comment/delete/<int:id>',methods = ['GET','POST'])
 @login_required
 def delete_comment(id):
-	user_val = session.get('user_val',None)
-	comment = Comments.query.get_or_404(id)
-	db.session.delete(comment)
-	db.session.commit()
-	flash('Comment %d deleted successfully'%(id,))
-	return redirect('/comments')
+    comment = Comments.query.get_or_404(id)
+    db.session.delete(comment)
+    db.session.commit()
+    flash('Comment %d deleted successfully'%(id,))
+    return redirect('/comments')
 
 @app.route('/posts/new',methods = ['GET','POST'])
 @login_required
@@ -239,10 +243,11 @@ def newpost():
 	user_val = session.get('user_val', None)
 	if request.method == 'POST':
 		title = request.form['title']
-		post.content = request.form['content']
-		post.author = user_val
+		content = request.form['content']
+		author = user_val
+		created = datetime.now()+timedelta(hours = 5,minutes = 30)
 		user = User.query.filter_by(username = user_val).first()
-		new_post = Posts(title = title,content = conten,author = tauthor,owner = user)
+		new_post = Posts(title = title,content = content,author = author,owner = user,created = created)
 		db.session.add(new_post)
 		db.session.commit()
 		return redirect('/posts')
