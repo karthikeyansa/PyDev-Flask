@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<p><h2>Comments 💬</h2></p>
+<a style="display:inline;" class="btn btn-success float-right" href="/posts/new">📖 New Post</a>
+<style type="text/css">
+  .circle {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  font-size: 30px;
+  text-align: center;
+  color: white;
+}
+#profileicon {display:inline-block;margin-right:10px;} 
+#postdetail {display:inline-block;}
+</style>
+<br>
+<br>
+{% endblock %}
+
+{% block body %}
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+    <hr>
+    <h3 class="text-warning">{{ message }}</h3>
+    <hr>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+{% if comments %}
+  {% for comment in comments %}
+    <div style="padding: 15px; background-color: white; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);;">
+      <div id="profileicon" class="circle" style="background-color:{{ comment.color }} ;">{{ comment.author[0].upper() }}</div> 
+      <div id='postdetail'><h5 id='postdetail' style="color:blue;">{{ comment.author }}</h5><h6 id='postdetail' class="text-dark">&nbsp;&nbsp;{{ comment.created.strftime('%B %d %Y - %H:%M') }}</h6></div>
+      <hr>
+      <h4 class="text-danger"><u>{{ comment.post.title }}</u></h4><br>    
+      <h5><p class="text-warning" style = "white-space:pre-wrap">{{ comment.content }}</p></h5>
+      {% if comment.author == user %}
+        <p></p><br>
+        <a class="btn btn-danger" href="/comment/delete/{{ comment.id }}" >🗑️</a>
+      {% endif %}
+    </div>
+    <br>
+  {% endfor %}
+{% else %}
+<h3 class="text-warning">No Comments Found!</h3>
+{% endif %} 
+{% endblock %}

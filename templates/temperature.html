@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<h2><center>Temperature ☔</center></h2>
+<hr>
+<style type="text/css">
+	footer{
+      padding: 10px 20px;
+      background: black;
+      color: white;
+      }
+</style>
+{% endblock %}
+
+{% block body %}
+<center>
+<img class="img-fluid" src="{{url_for('static', filename='templates.png')}}"/>
+<hr>
+<h1>The Temperature At This Zipcode <u style="color:blue;">{{ zipcode }}</u> Is: <u style="color:green;">{{ temp }}</u>°c</h1>
+<small><a class = "btn btn-primary" href="/home/{{ key }}"><--Back To Home</a></small>
+<small><a class = "btn btn-warning" href="/weather">Check Other Locations ✈</a></small>
+<br>
+<hr>
+<footer>Developed by: <a href="https://github.com/karthikeyansa/weather_app"> KARTHIKEYAN.S.A </a></footer>
+</center>
+{% endblock %}
