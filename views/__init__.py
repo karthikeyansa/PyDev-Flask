@@ -258,9 +258,12 @@ def newpost():
 @login_required
 def search():
 	query = request.args.get('title')
-	resp = Posts.query.filter(Posts.title.ilike(f'%{query}%')).all()
-	resp.reverse()
-	return render_template('searchpost.html',posts = resp)
+	if len(query) == 0:
+		return redirect(request.referrer)
+	else:
+		resp = Posts.query.filter(Posts.title.ilike(f'%{query}%')).all()
+		resp.reverse()
+		return render_template('searchpost.html',posts = resp)
 
 @app.route('/like/<int:post_id>/<action>')
 @login_required

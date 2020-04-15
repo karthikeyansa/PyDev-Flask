@@ -11,9 +11,9 @@
 	    <input class="form-control" type="hidden" name="title" id="title" value="{{ post.id }}" aria-label="Enter title">
 		<br>
 		<h5><label for="content">Comment:</label></h5>
-    	<textarea class="form-control" name="content" id="content" aria-label="Enter content" placeholder="Enter Comment" rows="3"></textarea>
+    	<textarea class="form-control" name="content" id="content" aria-label="Enter content" placeholder="Enter Comment" rows="3" required></textarea>
     	<br>
-		<input class="btn btn-success"type="submit" value="Add Comment 💬">
+		<input class="btn btn-success"type="submit" id="addcomment" value="Add Comment 💬">
 	</form>
 	<hr>
 {% endblock %}

@@ -8,64 +8,62 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="/posts"><span class="badge badge-dark">PyDev</span></a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+<nav class="navbar navbar-expand-lg navbar-dark" style="background:linear-gradient(to right,#f7971e,#ffd200 ); border-radius: 0px">
+  <a class="navbar-brand" href="/posts"><span class="badge badge-dark" style="border-radius: 0px">PyDev</span></a>
+  <button class="navbar-toggler" style="background-color: white; border-radius:0px" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
        <li class="nav-item">
-        <a class="nav-link" href="/home/{{ key }}"> Home 🏠 <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="/home/{{ key }}">Home</a>
        </li>
        <li class="nav-item">
-        <a class="nav-link" href="/posts">Posts ✉️ </a>
+        <a class="nav-link" href="/posts">Posts</a>
        </li>
        <li class="nav-item">
-        <a class="nav-link" href="/comments">Comments 💬 </a>
+        <a class="nav-link" href="/comments">Comments</a>
        </li>
        <li class="nav-item">
-        <a class="nav-link" href="/account">Account 📓</a>
+        <a class="nav-link" href="/account">Account</a>
        </li>
        <li class="nav-item">
-        <a class="nav-link" href="/logout">Logout 👋</a>
+        <a class="nav-link" href="/logout">Logout</a>
        </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Go Social 📱
-        </a>
+        Go Social</a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="https://www.facebook.com">FaceBook</a>
-          <a class="dropdown-item" href="https://www.instagram.com">Instagram</a>
-          <a class="dropdown-item" href="https://in.linkedin.com">LinkedIn</a>
-          <a class="dropdown-item" href="https://twitter.com">Twitter</a>
-          <a class="dropdown-item" href="https://www.youtube.com">YouTube</a>
+          <a class="dropdown-item" href="https://www.facebook.com" target="_blank">FaceBook</a>
+          <a class="dropdown-item" href="https://www.instagram.com" target="_blank">Instagram</a>
+          <a class="dropdown-item" href="https://in.linkedin.com" target="_blank">LinkedIn</a>
+          <a class="dropdown-item" href="https://twitter.com" target="_blank">Twitter</a>
+          <a class="dropdown-item" href="https://www.youtube.com" target="_blank">YouTube</a>
          </div>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Tech Blogs 💻
-        </a>
+          Tech Blogs</a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-         <a class="dropdown-item" href="https://dev.to/">DEV Community</a>
-          <a class="dropdown-item" href="https://www.freecodecamp.org/news/">FreeCodeCamp</a>
-          <a class="dropdown-item" href="https://www.sitepoint.com/blog">SitePoint</a>
-          <a class="dropdown-item" href="https://www.tympanus.net/codrops">Codrops</a>
-          <a class="dropdown-item" href="https://css-tricks.com">CSS-Tricks</a>
+          <a class="dropdown-item" href="https://github.com/trending" target="_blank">GitHub Community</a>
+          <a class="dropdown-item" href="https://dev.to/" target="_blank">DEV Community</a>
+          <a class="dropdown-item" href="https://www.freecodecamp.org/news/" target="_blank">FreeCodeCamp</a>
+          <a class="dropdown-item" href="https://www.sitepoint.com/blog" target="_blank">SitePoint</a>
+          <a class="dropdown-item" href="https://www.tympanus.net/codrops" target="_blank">Codrops</a>
+          <a class="dropdown-item" href="https://css-tricks.com" target="_blank">CSS-Tricks</a>
           </div>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Extras 📜
-        </a>
+          Extras</a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <a class="dropdown-item" href="/weather">OpenWeather ⛅ </a>
+        <a class="dropdown-item" href="/weather">OpenWeather  </a>
         </div>
       </li>
     </ul>
     <form action="{{ url_for('search') }}" class="form-inline my-2 my-md-0">
-    <input class="form-control mr-sm-2" type="text" name = 'title' placeholder="Enter Post title">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    <input class="form-control mr-sm-2" id="searchbar" style="border-radius: 0px" type="text" name = 'title' placeholder="Enter Post title">
+      <button class="btn btn-outline-dark my-2 my-sm-0" style="border-radius: 0px" type="submit">Search</button>
     </form>   
   </div>
 </nav>

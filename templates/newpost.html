@@ -7,12 +7,12 @@
 	<hr>
 	<form action="/posts" method="POST">
 		<label for="title">Title:</label>
-	    <input class="form-control" type="text" name="title" id="title" placeholder="Enter title" aria-label="Enter title">
+	    <input class="form-control" type="text" name="title" id="title" placeholder="Enter title" aria-label="Enter title" required>
 		<br>
 		<label for="content">Post:</label>
-    	<textarea class="form-control" name="content" id="content" placeholder="Enter Post" aria-label="Enter content" rows="3"></textarea>
+    	<textarea class="form-control" name="content" id="content" placeholder="Enter Post" aria-label="Enter content" rows="3" required></textarea>
     	<br>
-		<input class="btn btn-primary" type="submit" value="POST">
+		<input class="btn btn-primary" id="addpost" type="submit" value="POST">
 	</form>
 	<hr>
 {% endblock %}

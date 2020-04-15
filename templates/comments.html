@@ -2,7 +2,7 @@
 
 {% block head %}
 <p><h2>Comments 💬</h2></p>
-<a style="display:inline;" class="btn btn-success float-right" href="/posts/new">📖 New Post</a>
+<a style="display:inline;" class="btn btn-success float-right" id="newpost" href="/posts/new">📖 New Post</a>
 <style type="text/css">
   .circle {
   height: 50px;
@@ -39,7 +39,7 @@
       <h5><p class="text-warning" style = "white-space:pre-wrap">{{ comment.content }}</p></h5>
       {% if comment.author == user %}
         <p></p><br>
-        <a class="btn btn-danger" href="/comment/delete/{{ comment.id }}" >🗑️</a>
+        <a class="btn btn-danger" id="deletecomment" href="/comment/delete/{{ comment.id }}" >🗑️</a>
       {% endif %}
     </div>
     <br>

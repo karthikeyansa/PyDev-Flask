@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 </head>
 <body>
-<center><h1><u class="text-primary">Welcome To</u><span class="badge badge-dark">PyDev</span></h1>
+<center><h1><u class="text-primary">Welcome To&nbsp;</u><span class="badge badge-dark">PyDev</span></h1>
 <img class="img-fluid" src="{{ url_for('static',filename='blueprints.png') }}"/></center>
 <center>
     {% with messages = get_flashed_messages() %}
@@ -22,7 +22,7 @@
       {% endfor %}
       {% endif %}
     {% endwith %}
-    <h2><u class="text-primary">Log in to </u><span class="badge badge-dark">PyDev</span></h2><br>
+    <h2><u class="text-primary">Log in to&nbsp;</u><span class="badge badge-dark">PyDev</span></h2><br>
 	  <form action="{{ url_for('login') }}" method = 'POST'>
 		<h3 class="text-danger">{{ msg }}</h3>
     <h3 class="text-success">{{ msg2 }}</h3>
@@ -37,8 +37,8 @@
     <div class="form-group">
     <a href="{{ url_for('forgot') }}">Forgot Password</a><br>
     </div>
-    <input class = "btn btn-primary" type="submit"  value="Sign In">
-    <a class="btn btn-warning" href="{{ url_for('register') }}">Sign Up</a>
+    <input class = "btn btn-primary" type="submit"  id = "signin" value="Sign in">
+    <a class="btn btn-warning" href="{{ url_for('register') }}">Sign up</a>
     <br>
     </form> 
 </center>
