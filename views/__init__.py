@@ -316,7 +316,6 @@ def recover():
 			subject = 'Password Recovery From PyDev'
 			message = 'Hello %s.\n\nYour PyDev account password is "%s".\n\nNOTE:If you have not requested password change, your account would have been hacked.Kindly mail us for any queries.\n\nMail ID: impowaste39@gmail.com\n\nRegards: PyDev'%(username,password,)
 			msg = mail(email,subject,message)
-			flash('We have send your password to your registered email account')
 			return redirect('/forgot')
 		else:
 			flash('No search results found!')
