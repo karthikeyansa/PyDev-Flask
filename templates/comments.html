@@ -36,7 +36,7 @@
       <div id='postdetail'><h5 id='postdetail' style="color:blue;">{{ comment.author }}</h5><h6 id='postdetail' class="text-dark">&nbsp;&nbsp;{{ comment.created.strftime('%B %d %Y - %H:%M') }}</h6></div>
       <hr>
       <h4 class="text-danger"><u>{{ comment.post.title }}</u></h4><br>    
-      <h5><p class="text-warning" style = "white-space:pre-wrap">{{ comment.content }}</p></h5>
+      <h5><p class="text-dark" style = "white-space:pre-wrap">{{ comment.content }}</p></h5>
       {% if comment.author == user %}
         <p></p><br>
         <a class="btn btn-danger" id="deletecomment" href="/comment/delete/{{ comment.id }}" >🗑️</a>

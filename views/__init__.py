@@ -306,7 +306,7 @@ def recover():
 			password = unknownuser.password
 			email = unknownuser.email
 			subject = 'Password Recovery From PyDev'
-			message = 'Hello %s.\n\nYour PyDev account password is "%s".\n\nNOTE:If you have not requested password change, your account would have been hacked.Kindly mail us with your new password.\n\nMail ID: impowaste39@gmail.com\n\nRegards: PyDev'%(username,password,)
+			message = 'Hello %s.\n\nYour PyDev account password is "%s".\n\nNOTE:If you have not requested password change, your account would have been hacked.Kindly mail us for any queries.\n\nMail ID: impowaste39@gmail.com\n\nRegards: PyDev'%(username,password,)
 			msg = mail(email,subject,message)
 			return redirect('/forgot')
 		elif unknownemail:
@@ -314,12 +314,51 @@ def recover():
 			password = unknownemail.password
 			email = unknownemail.email
 			subject = 'Password Recovery From PyDev'
-			message = 'Hello %s.\n\nYour PyDev account password is "%s".\n\nNOTE:If you have not requested password change, your account would have been hacked.Kindly mail us with your new password.\n\nMail ID: impowaste39@gmail.com\n\nRegards: PyDev'%(username,password,)
+			message = 'Hello %s.\n\nYour PyDev account password is "%s".\n\nNOTE:If you have not requested password change, your account would have been hacked.Kindly mail us for any queries.\n\nMail ID: impowaste39@gmail.com\n\nRegards: PyDev'%(username,password,)
 			msg = mail(email,subject,message)
 			return redirect('/forgot')
 		else:
 			flash('No search results found!')
 			return redirect('/forgot')
+#password change
+def mail(email,subject,msg):
+	try:
+		server = smtplib.SMTP('smtp.gmail.com:587')
+		server.ehlo()
+		server.starttls()
+		server.login("impowaste39@gmail.com","Letsfuck39")
+		message = 'Subject: {}\n\n{}'.format(subject, msg)
+		server.sendmail("impowaste39@gmail.com",email, message)
+		server.quit()
+	except:
+		flash('The email account that you tried to reach does not exists')
+@app.route('/changepassword',methods = ['GET','POST'])
+@login_required
+def changepassword():
+	user_val = session.get('user_val', None)
+	if request.method == 'POST':
+		user = User.query.filter_by(username = user_val).first()
+		newpassword = request.form['newpassword']
+		retypepassword = request.form['retypepassword']
+		oldpassword = user.password
+		if newpassword == retypepassword and newpassword != oldpassword:
+			user.password = newpassword
+			db.session.commit()
+			username = user.username
+			password = user.password
+			email = user.email
+			subject = 'Password Changed From PyDev'
+			message = 'Hello %s.\n\nYour PyDev account password is "%s".\n\nNOTE:If you have not requested password change, your account would have been hacked.Kindly mail us for any queries.\n\nMail ID: impowaste39@gmail.com\n\nRegards: PyDev'%(username,password,)
+			msg = mail(email,subject,message)
+			flash('Password changed successfully')
+			return redirect('/account')
+		else:
+	 		flash('Password mismatch or typed current password')
+	 		return redirect('/changepassword')
+	else:
+		user = User.query.filter_by(username = user_val).first()
+		oldpassword = user.password
+		return render_template('updatepassword.html',oldpassword = oldpassword)
 
 @app.context_processor
 def context_processor():
