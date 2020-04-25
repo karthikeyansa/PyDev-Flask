@@ -7,7 +7,7 @@ app.config.from_pyfile('configuration/config.py')
 
 db = SQLAlchemy(app)
 
-from views impor *
+from views import *
 
 if __name__ == '__main__':
 	app.run(debug = True)
