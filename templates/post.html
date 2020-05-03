@@ -2,8 +2,7 @@
 
 {% block head %}
 <br>
-<h2>Posts ✉️</h2>
-<a style="display:inline;" class="btn btn-success float-right" id="newpost" href="/posts/new">📖 New Post</a>
+<h2>Questions ✉️</h2>
 <style type="text/css">
 	.circle {
   height: 50px;
@@ -21,6 +20,18 @@
 {% endblock %}
 
 {% block body %}
+<div style="padding: 15px; background-color: white; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);;">
+<h3 class="text-primary">Ask Question</h3>
+  <form action="/posts" method="POST">
+    <label for="title">Tag:</label>
+      <input class="form-control" type="text" name="title" id="title" placeholder="Enter tag" aria-label="Enter title" required>
+    <br>
+    <label for="content">Question:</label>
+      <textarea class="form-control" name="content" id="content" placeholder="Your Question" aria-label="Enter content" rows="3" required></textarea>
+      <br>
+    <input class="btn btn-primary" id="addpost" type="submit" value="Post your question">
+  </form>
+</div>
 	{% with messages = get_flashed_messages() %}
 			{% if messages %}
 			{% for message in messages %}
@@ -34,25 +45,68 @@
 	{% for post in posts %}
 		<br>
 	    <div style="padding: 15px; background-color: white; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);;">
-      	<div id="profileicon" class="circle" style="background-color:{{ post.owner.color }} ;">{{ post.author[0].upper() }}</div> 
+        <div id="profileicon" class="circle" style="background-color:{{ post.owner.color }} ;">{{ post.author[0].upper() }}</div> 
       	<div id='postdetail'><h5 id='postdetail' style="color:blue">{{ post.author }}</h5><h6 id='postdetail' class="text-dark">&nbsp;&nbsp;{{ post.created.strftime('%B %d %Y - %H:%M') }}</h6></div>
       	<hr>
         <h3 class="text-danger"><u>{{ post.title }}</u></h3><br>
 			  <h4><p class="text-dark" style = "white-space:pre-wrap">{{ post.content }}</p></h4><br>
-        <h6 id="profileicon" class="text-primary">{{ post.likes.count() }}&nbsp;Votes</h6>
-        <h6 id="postdetail" class="text-success">{{ post.comments.count() }}&nbsp;Comments</h6>      
+        <h5 id="profileicon" class="text-primary">{{ post.likes.count() }}&nbsp;Votes</h5>
         <br>
         {% if current_user.has_liked_post(post) %}
-          <small><a class="btn btn-danger" id="unlike" href="{{ url_for('like_action', post_id=post.id, action='unlike') }}">👎</a></small> <small><a class = "btn btn-warning" id="newcomment" href ="/comment/{{ post.id }}">💬</a></small><br>
+          <small><a class="btn btn-danger" id="unlike" href="{{ url_for('like_action', post_id=post.id, action='unlike') }}">⬇</a></small><br>
         {% else %}
           <small>        
-          <a class="btn btn-primary" id="like" href="{{ url_for('like_action', post_id=post.id, action='like') }}">👍</a>
-          </small><small><a class = "btn btn-warning" id="newcomment" href ="/comment/{{ post.id }}">💬</a></small>
-          <br>
+          <a class="btn btn-primary" id="like" href="{{ url_for('like_action', post_id=post.id, action='like') }}">⬆</a></small><br>
         {% endif %}
-      	</div>
+        <br>
+        <h3 class="text-success">{{ post.comments.count() }}&nbsp;Answers</h3>      
+        <br>
+        <div style="padding: 15px; background-color: white; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);;">
+        {% if post.comments.all() %}
+           {% for comment in post.comments.all() %}
+          <br>
+            <div id="profileicon" class="circle" style="background-color:{{ comment.color }} ;">{{ comment.author[0].upper() }}
+            </div>
+            <div id='postdetail'><h5 id='postdetail' class="text-dark">{{ comment.author }}&nbsp;&nbsp;&nbsp;&nbsp;<h5 class="text-primary" id="postdetail">{{ comment.likes.count() }} Votes</h5></h5></div><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <h4 id='postdetail'class="text-success" style = "white-space:pre-wrap">{{ comment.content }}</h4><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <h6 id="postdetail"class="text-info">{{ comment.created.strftime('%B %d %Y - %H:%M') }}</h6>&nbsp;&nbsp;&nbsp;
+            {% if current_user.has_liked_comment(comment) %}
+              <small>
+              <a class="btn btn-danger" id="unlike" href="{{ url_for('clike_action', comment_id=comment.id, action='unlike') }}">⬇</a>
+              </small>
+              {% if comment.author == user %}
+                <a class="btn btn-danger" id="deletecomment" href="/comment/delete/{{ comment.id }}" >🗑️</a>
+              {% endif %}
+            {% else %}
+              <small>        
+              <a class="btn btn-primary" id="like" href="{{ url_for('clike_action', comment_id=comment.id, action='like') }}">⬆</a>
+              </small>
+              {% if comment.author == user %}
+                <a class="btn btn-danger" id="deletecomment" href="/comment/delete/{{ comment.id }}" >🗑️</a>
+              {% endif %}
+            {% endif %}
+            <hr>
+          {% endfor %}
+          <h3 class="text-success"><u>Your Answer</u></h3><br>
+            <form action='/comment/{{post.id}}' method="POST">
+                <textarea class="form-control" name="content" id="content" aria-label="Enter content" placeholder="Your Answer" rows="3" required></textarea>
+                <br>
+              <input class="btn btn-success"type="submit" id="addcomment" value="Post Your Answer">
+            </form>
+        {% elif not post.comments.all() %}
+          <h3 class="text-success"><u>Your Answer</u></h3><br>
+            <form action='/comment/{{post.id}}' method="POST">
+                <textarea class="form-control" name="content" id="content" aria-label="Enter content" placeholder="Your Answer" rows="3" required></textarea>
+                <br>
+              <input class="btn btn-success"type="submit" id="addcomment" value="Post Your Answer">
+            </form>
+        {% endif %}
+        </div>
+      </div>
+      <br>
 	{% endfor %}
 {% else %}
-	<h3 class="text-warning">No Posts!</h3>
+<br>
+	<h3 class="text-warning">No Questions!</h3>
 {% endif %} 
 {% endblock %}

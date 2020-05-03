@@ -2,7 +2,7 @@ from app import app,db
 from datetime import datetime,timedelta
 from flask import render_template,session,redirect,url_for,request,jsonify,flash
 from flask_login import LoginManager,UserMixin,login_user,login_required,logout_user,current_user
-from models import User,Posts,PostLike,Comments
+from models import User,Posts,PostLike,Comments,CommentLike
 import re,requests,smtplib,random
 
 
@@ -155,7 +155,7 @@ def posts():
 		return redirect('/posts')
 	else:
 		allposts = Posts.query.order_by(Posts.created.desc()).all()
-		return render_template('post.html',posts = allposts,id = id,color = color)
+		return render_template('post.html',posts = allposts,id = id,color = color,user = user_val)
 
 @app.route('/home/<cur_user>',methods = ['GET','POST'])
 @login_required
@@ -176,7 +176,7 @@ def home(cur_user):
 		some.posts.reverse()
 		allposts = some.posts
 		#allposts = Posts.query.order_by(Posts.created.desc()).all()
-		return render_template('home.html',posts = allposts,id = id,user = cur_user,color = some.color)
+		return render_template('home.html',posts = allposts,id = id,user = user_val,color = some.color)
 
 @app.route('/home/delete/<int:id>')
 @login_required
@@ -185,7 +185,7 @@ def delete(id):
 	post = Posts.query.get_or_404(id)
 	db.session.delete(post)
 	db.session.commit()
-	flash('Post %d deleted successfully'%(id,))
+	flash('Question %d deleted successfully'%(id,))
 	return redirect('/home/%s'%(user_val,))
 
 @app.route('/home/edit/<int:id>',methods = ['GET','POST'])
@@ -198,7 +198,7 @@ def edit(id):
 		post.content = request.form['content']
 		post.author = user_val
 		db.session.commit()
-		flash('Edited successfully Post:%d'%(id,))
+		flash('Edited successfully Question:%d'%(id,))
 		return redirect('/posts')
 	else:
 		return render_template('edit.html',post = post)
@@ -217,16 +217,9 @@ def comment(id):
 		comment = Comments(content = content,author = author,post = post,color = color,created = created)
 		db.session.add(comment)
 		db.session.commit()
-		return redirect('/comments')
+		return redirect('/posts')
 	else:
 		return render_template('newcomment.html',post = post)
-
-@app.route('/comments',methods = ['GET','POST'])
-@login_required
-def comments():
-	user_val = session.get('user_val',None)
-	allcomments = Comments.query.order_by(Comments.created.desc()).all()
-	return render_template('comments.html',comments = allcomments,user = user_val)
 
 @app.route('/comment/delete/<int:id>',methods = ['GET','POST'])
 @login_required
@@ -234,8 +227,8 @@ def delete_comment(id):
     comment = Comments.query.get_or_404(id)
     db.session.delete(comment)
     db.session.commit()
-    flash('Comment %d deleted successfully'%(id,))
-    return redirect('/comments')
+    flash('Answer deleted successfully')
+    return redirect('/posts')
 
 @app.route('/posts/new',methods = ['GET','POST'])
 @login_required
@@ -252,7 +245,7 @@ def newpost():
 		db.session.commit()
 		return redirect('/posts')
 	else:
-		return render_template('newpost.html',cur_val = user_val)
+		return redirect('/posts')
 
 @app.route('/search')
 @login_required
@@ -276,7 +269,17 @@ def like_action(post_id, action):
         current_user.unlike_post(post)
         db.session.commit()
     return redirect(request.referrer)
-
+@app.route('/clike/<int:comment_id>/<action>')
+@login_required
+def clike_action(comment_id,action):
+	comment = Comments.query.filter_by(id = comment_id).first_or_404()
+	if action == 'like':
+		current_user.like_comment(comment)
+		db.session.commit()
+	if action == 'unlike':
+		current_user.unlike_comment(comment)
+		db.session.commit()
+	return redirect(request.referrer)
 @app.route('/forgot')
 def forgot():
 	return render_template('forgot.html')

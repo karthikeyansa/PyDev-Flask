@@ -36,7 +36,7 @@
 	<h3><p class="text-primary"><u>Account Information</u></p></h3>
 	<h5 id="postdetail">Username :&nbsp;&nbsp;<a class="text-primary">{{ username }}</a></h5>
 	<h5>Email :&nbsp;&nbsp;<a class="text-primary">{{ email }}</a></h5>
-	<h5>Posts :&nbsp;&nbsp;<a class="text-primary">{{ posts }}</a></h5>
+	<h5>Questions :&nbsp;&nbsp;<a class="text-primary">{{ posts }}</a></h5>
 	<h5>Joined <span class="badge badge-dark"><a href="/posts" class="text-light">PyDev</a></span> on:&nbsp;&nbsp;<a class="text-primary">{{ created.strftime('%B %d %Y - %H:%M') }}</a></h5>
 	<br>
 	<a class="btn btn-primary" href="{{ url_for('changepassword') }}">Change password</a>

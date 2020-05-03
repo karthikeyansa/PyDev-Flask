@@ -22,8 +22,8 @@
 {% block body %}
 <div>
   <hr>
-  <a class="btn btn-primary" href="/posts" role="button">Go To Posts ✉️</a>
-  <a style="display:inline;" class="btn btn-success float-right" id="newpost" href="/posts/new">📖 New Post</a>
+  <a class="btn btn-primary" href="/posts" role="button">Questions ✉️</a>
+  <a style="display:inline;" class="btn btn-success float-right" id="newpost" href="/posts/new">📖 Ask Question</a>
   <hr>
 </div>
 {% with messages = get_flashed_messages() %}
@@ -43,16 +43,16 @@
         <h3 class="text-danger"><u>{{ post.title }}</u></h3><br>
         <h4><p class="text-dark" style = "white-space:pre-wrap">{{ post.content }}</p></h4><br>
         <h6 id="profileicon" class="text-primary">{{ post.likes.count() }}&nbsp;Votes</h6>
-        <h6 id="postdetail" class="text-success">{{ post.comments.count() }}&nbsp;Comments</h6>
+        <h6 id="postdetail" class="text-success">{{ post.comments.count() }}&nbsp;Answers</h6>
         <br>
         {% if current_user.has_liked_post(post) %}
-          <small><a class="btn btn-danger" id='unlike' href="{{ url_for('like_action', post_id=post.id, action='unlike') }}">👎</a></small>
+          <small><a class="btn btn-danger" id='unlike' href="{{ url_for('like_action', post_id=post.id, action='unlike') }}">⬇</a></small>
           <small><a class = "btn btn-warning" href="/home/edit/{{ post.id }}">✏️</a></small>
           <small><a class = "btn btn-danger" id="deletepost" href ="/home/delete/{{ post.id }}">🗑️</a></small>
           <br> 
         {% else %}
           <small>        
-          <a class="btn btn-primary" id="like" href="{{ url_for('like_action', post_id=post.id, action='like') }}">👍</a>
+          <a class="btn btn-primary" id="like" href="{{ url_for('like_action', post_id=post.id, action='like') }}">⬆</a>
           </small><small><a class = "btn btn-warning" href="/home/edit/{{ post.id }}">✏️</a></small>
           <small><a class = "btn btn-danger" id="deletepost" href ="/home/delete/{{ post.id }}">🗑️</a></small>
           <br>
@@ -60,7 +60,8 @@
     </div>
   {% endfor %}
 {% else %}
-  <h3 class="text-warning">No Posts!</h3>
+<br>
+  <h3 class="text-warning">No Questions!</h3>
 {% endif %} 
 {% endblock %}
            
