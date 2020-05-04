@@ -36,7 +36,7 @@
 			{% if messages %}
 			{% for message in messages %}
 			<hr>
-	  			<h3 class="text-warning">{{ message }}</h3>
+	  			<h3 class="text-danger">{{ message }}</h3>
 			<hr>
 			{% endfor %}
 			{% endif %}
@@ -53,10 +53,10 @@
         <h5 id="profileicon" class="text-primary">{{ post.likes.count() }}&nbsp;Votes</h5>
         <br>
         {% if current_user.has_liked_post(post) %}
-          <small><a class="btn btn-danger" id="unlike" href="{{ url_for('like_action', post_id=post.id, action='unlike') }}">⬇</a></small><br>
+          <small><a class="btn btn-danger" id="unlike" href="{{ url_for('like_action', post_id=post.id, action='unlike') }}">✘</a></small><br>
         {% else %}
           <small>        
-          <a class="btn btn-primary" id="like" href="{{ url_for('like_action', post_id=post.id, action='like') }}">⬆</a></small><br>
+          <a class="btn btn-success" id="like" href="{{ url_for('like_action', post_id=post.id, action='like') }}">✔</a></small><br>
         {% endif %}
         <br>
         <h3 class="text-success">{{ post.comments.count() }}&nbsp;Answers</h3>      
@@ -72,14 +72,14 @@
             <h6 id="postdetail"class="text-info">{{ comment.created.strftime('%B %d %Y - %H:%M') }}</h6>&nbsp;&nbsp;&nbsp;
             {% if current_user.has_liked_comment(comment) %}
               <small>
-              <a class="btn btn-danger" id="unlike" href="{{ url_for('clike_action', comment_id=comment.id, action='unlike') }}">⬇</a>
+              <a class="btn btn-danger" id="unlike" href="{{ url_for('clike_action', comment_id=comment.id, action='unlike') }}">✘</a>
               </small>
               {% if comment.author == user %}
                 <a class="btn btn-danger" id="deletecomment" href="/comment/delete/{{ comment.id }}" >🗑️</a>
               {% endif %}
             {% else %}
               <small>        
-              <a class="btn btn-primary" id="like" href="{{ url_for('clike_action', comment_id=comment.id, action='like') }}">⬆</a>
+              <a class="btn btn-success" id="like" href="{{ url_for('clike_action', comment_id=comment.id, action='like') }}">✔</a>
               </small>
               {% if comment.author == user %}
                 <a class="btn btn-danger" id="deletecomment" href="/comment/delete/{{ comment.id }}" >🗑️</a>

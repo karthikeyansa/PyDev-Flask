@@ -29,7 +29,7 @@
 {% with messages = get_flashed_messages() %}
   {% if messages %}
     {% for message in messages %}
-      <h3 class="text-warning">{{ message }}</h3>
+      <h3 class="text-danger">{{ message }}</h3>
     {% endfor %}
   {% endif %}
 {% endwith %}
@@ -46,15 +46,15 @@
         <h6 id="postdetail" class="text-success">{{ post.comments.count() }}&nbsp;Answers</h6>
         <br>
         {% if current_user.has_liked_post(post) %}
-          <small><a class="btn btn-danger" id='unlike' href="{{ url_for('like_action', post_id=post.id, action='unlike') }}">⬇</a></small>
-          <small><a class = "btn btn-warning" href="/home/edit/{{ post.id }}">✏️</a></small>
-          <small><a class = "btn btn-danger" id="deletepost" href ="/home/delete/{{ post.id }}">🗑️</a></small>
+          <a class="btn btn-danger" id='unlike' href="{{ url_for('like_action', post_id=post.id, action='unlike') }}">✘</a>
+          <a class = "btn btn-warning" href="/home/edit/{{ post.id }}">✏️</a>
+          <a class = "btn btn-danger" id="deletepost" href ="/home/delete/{{ post.id }}">🗑️</a>
           <br> 
         {% else %}
-          <small>        
-          <a class="btn btn-primary" id="like" href="{{ url_for('like_action', post_id=post.id, action='like') }}">⬆</a>
-          </small><small><a class = "btn btn-warning" href="/home/edit/{{ post.id }}">✏️</a></small>
-          <small><a class = "btn btn-danger" id="deletepost" href ="/home/delete/{{ post.id }}">🗑️</a></small>
+            
+          <a class="btn btn-success" id="like" href="{{ url_for('like_action', post_id=post.id, action='like') }}">✔</a>
+          <a class = "btn btn-warning" href="/home/edit/{{ post.id }}">✏️</a>
+          <a class = "btn btn-danger" id="deletepost" href ="/home/delete/{{ post.id }}">🗑️</a>
           <br>
         {% endif %}
     </div>
