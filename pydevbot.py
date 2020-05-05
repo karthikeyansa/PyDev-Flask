@@ -40,7 +40,6 @@ searchbar.send_keys('pydev bot')
 t.sleep(2)
 searchbar.send_keys(Keys.ENTER)
 t.sleep(2)
-newcomment = browser.find_element_by_id('newcomment').click()
 content = browser.find_element_by_id('content').send_keys("that's true")
 addcomment = browser.find_element_by_id('addcomment').click()
 t.sleep(1)
@@ -59,6 +58,7 @@ logout = browser.find_element_by_link_text('Logout').click()
 print('success')
 total = time() - start
 actual = time() - start - 11
+browser.quit()
 browser.quit()
 subject = "Hello From NotPyDev"
 msg = "Hello Master KARTHIKEYAN\n\nTask 1:We are from DB department(code:001),we are good and running!.\n\nTask 2:We are from TEMPLATES department(code:002),we are good and running!.\n\nTask 3:We are from STATIC department(code:003),we are good and running!.\n\nTask 4:We are from VIEWS department(code:004),we are good and running!.\n\nTotal runtime {:.2f} seconds.\n\nActual runtime {:.2f} seconds.\n\nThis is your PyDev Bot ,ALL SYSTEMS RUNNING SUCCESSFULLY!!.\n\nvisit:https://notpydev.pythonanywhere.com/".format(total,actual)
