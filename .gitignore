@@ -111,7 +111,7 @@ env.bak/
 venv.bak/
 #authentication
 authentication/
-.auth.py
+auth.py
 
 # Spyder project settings
 .spyderproject
