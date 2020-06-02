@@ -32,6 +32,50 @@
     <input class="btn btn-primary" id="addpost" type="submit" value="Post your question">
   </form>
 </div>
+<br>
+<div style="padding: 15px; background-color: white; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);;">
+<h3 class="text-primary">Create a Poll</h3>
+<form action="{{ url_for('polls') }}" method="post">
+    <center>
+    Question&nbsp;<input type="text" name="question" size="100" placeholder="Your Question" required><br><br>
+    Choices<br><br>
+    &nbsp;<input type="text" name="choice1" placeholder = "Enter choice1" required>&nbsp;&nbsp;vs&nbsp;
+    &nbsp;<input type="text" name="choice2" placeholder = "Enter choice2" required><br><br>
+    <input type="submit" name="submit" value="Post your poll" class="btn btn-primary"><br>
+    </center>
+</form>
+</div>
+<br>
+<div style="padding: 15px; background-color: white; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);;">
+{% if polls %}
+    <h3 class="text-primary">Trending Polls</h3><br>
+    {% for poll in polls %}
+    <h4>
+    Poll created by&nbsp;<i class="text-primary">{{ poll.owner.username }}</i><br>
+    </h4>
+    <form method="post" action="{{ url_for('poll',id = poll.id) }}">
+        <h3>{{ poll.question }}</h3><br>
+        <h4>
+        <input type="radio" name="choice" value="{{ poll.choice1 }}" required>&nbsp;{{ poll.choice1 }}<br>
+        <input type="radio" name="choice" value="{{ poll.choice2 }}">&nbsp;{{ poll.choice2 }}<br>
+        <br>
+        </h4>
+        {% if not current_user.has_voted_poll(poll) %}
+            <input id="profileicon" type="submit" value="submit" name="submit" class="btn btn-primary">
+        {% else %}
+        <h3 class="text-warning" id="postdetail">Already voted</h3><br><br>
+        <h4 class="text-success" id="profileicon">Votes&nbsp;<h4 class="text-primary" id="postdetail">{{ poll.sum() }}</h4></h4><br>
+        {% endif %}
+        {% if current_user.id  == poll.owner_id %}
+        <a href="{{ url_for('poll_delete',id = poll.id) }}" class="btn btn-danger">Delete this poll</a>
+        {% endif %}
+        <br><hr>
+    </form>
+    {% endfor %}
+{% else %}
+<h1>No polls</h1>
+{% endif %}
+</div>
 	{% with messages = get_flashed_messages() %}
 			{% if messages %}
 			{% for message in messages %}
