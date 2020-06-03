@@ -12,7 +12,7 @@
   text-align: center;
   color: white;
 }
-#profileicon {display:inline-block;margin-right:10px;} 
+#profileicon {display:inline-block;margin-right:10px;}
 #postdetail {display:inline-block;}
 </style>
 <br>
@@ -37,10 +37,13 @@
 <h3 class="text-primary">Create a Poll</h3>
 <form action="{{ url_for('polls') }}" method="post">
     <center>
-    Question&nbsp;<input type="text" name="question" size="100" placeholder="Your Question" required><br><br>
-    Choices<br><br>
-    &nbsp;<input type="text" name="choice1" placeholder = "Enter choice1" required>&nbsp;&nbsp;vs&nbsp;
-    &nbsp;<input type="text" name="choice2" placeholder = "Enter choice2" required><br><br>
+    <label for ="question">Question:</label>
+        <textarea class="form-control" name="question" placeholder="Your Question" aria-label="Enter Question" rows="3" required></textarea>
+    <center><label>Choices</label></center><br>
+    <label for="choice1" class="text-success">Choice 1</label>
+    &nbsp;<input type="text" name="choice1" placeholder = "Enter choice1" required><br>&nbsp;&nbsp;<br>vs<br><br>
+    <label for="choice2" class="text-danger">Choice 2</label>
+    &nbsp;&nbsp;<input type="text" name="choice2" placeholder = "Enter choice2" required><br><br>
     <input type="submit" name="submit" value="Post your poll" class="btn btn-primary"><br>
     </center>
 </form>
@@ -56,8 +59,8 @@
     <form method="post" action="{{ url_for('poll',id = poll.id) }}">
         <h3>{{ poll.question }}</h3><br>
         <h4>
-        <input type="radio" name="choice" value="{{ poll.choice1 }}" required>&nbsp;{{ poll.choice1 }}<br>
-        <input type="radio" name="choice" value="{{ poll.choice2 }}">&nbsp;{{ poll.choice2 }}<br>
+        <input type="radio" name="choice" value="{{ poll.choice1 }}" required class="text-primary">&nbsp;{{ poll.choice1 }}<br>
+        <input type="radio" name="choice" value="{{ poll.choice2 }}" class="text-danger">&nbsp;{{ poll.choice2 }}<br>
         <br>
         </h4>
         {% if not current_user.has_voted_poll(poll) %}
@@ -85,11 +88,11 @@
 			{% endfor %}
 			{% endif %}
 	{% endwith %}
-{% if posts %} 
+{% if posts %}
 	{% for post in posts %}
 		<br>
 	    <div style="padding: 15px; background-color: white; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);;">
-        <div id="profileicon" class="circle" style="background-color:{{ post.owner.color }} ;">{{ post.author[0].upper() }}</div> 
+        <div id="profileicon" class="circle" style="background-color:{{ post.owner.color }} ;">{{ post.author[0].upper() }}</div>
       	<div id='postdetail'><h5 id='postdetail' style="color:blue">{{ post.author }}</h5><h6 id='postdetail' class="text-dark">&nbsp;&nbsp;{{ post.created.strftime('%B %d %Y - %H:%M') }}</h6></div>
       	<hr>
         <h3 class="text-danger"><u>{{ post.title }}</u></h3><br>
@@ -99,11 +102,11 @@
         {% if current_user.has_liked_post(post) %}
           <small><a class="btn btn-danger" id="unlike" href="{{ url_for('like_action', post_id=post.id, action='unlike') }}">✘</a></small><br>
         {% else %}
-          <small>        
+          <small>
           <a class="btn btn-success" id="like" href="{{ url_for('like_action', post_id=post.id, action='like') }}">✔</a></small><br>
         {% endif %}
         <br>
-        <h3 class="text-success">{{ post.comments.count() }}&nbsp;Answers</h3>      
+        <h3 class="text-success">{{ post.comments.count() }}&nbsp;Answers</h3>
         <br>
         <div style="padding: 15px; background-color: white; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);;">
         {% if post.comments.all() %}
@@ -122,7 +125,7 @@
                 <a class="btn btn-danger" id="deletecomment" href="/comment/delete/{{ comment.id }}" >🗑️</a>
               {% endif %}
             {% else %}
-              <small>        
+              <small>
               <a class="btn btn-success" id="like" href="{{ url_for('clike_action', comment_id=comment.id, action='like') }}">✔</a>
               </small>
               {% if comment.author == user %}
@@ -152,5 +155,5 @@
 {% else %}
 <br>
 	<h3 class="text-warning">No Questions!</h3>
-{% endif %} 
+{% endif %}
 {% endblock %}
