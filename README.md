@@ -13,29 +13,29 @@ In order to run this container you'll need docker installed.
 
 ## Built With
   # Framework
-    *Flask
+    * Flask
   # Language
-    *Python 
+    * Python 
   # Libraries
-    *altgraph==0.17
-    *certifi==2019.11.28
-    *chardet==3.0.4
-    *click==7.1.1
-    *EasyProcess==0.2.10
-    *Flask==1.1.1
-    *Flask-Login==0.5.0
-    *Flask-SQLAlchemy==2.4.1
-    *gunicorn==20.0.4
-    *idna==2.9
-    *itsdangerous==1.1.0
-    *Jinja2==2.11.1
-    *MarkupSafe==1.1.1
-    *PyVirtualDisplay==0.2.5
-    *requests==2.23.0
-    *selenium==3.141.0
-    *SQLAlchemy==1.3.15
-    *urllib3==1.25.8
-    *Werkzeug==1.0.0
+    * altgraph==0.17
+    * certifi==2019.11.28
+    * chardet==3.0.4
+    * click==7.1.1
+    * EasyProcess==0.2.10
+    * Flask==1.1.1
+    * Flask-Login==0.5.0
+    * Flask-SQLAlchemy==2.4.1
+    * gunicorn==20.0.4
+    * idna==2.9
+    * itsdangerous==1.1.0
+    * Jinja2==2.11.1
+    * MarkupSafe==1.1.1
+    * PyVirtualDisplay==0.2.5
+    * requests==2.23.0
+    * selenium==3.141.0
+    * SQLAlchemy==1.3.15
+    * urllib3==1.25.8
+    * Werkzeug==1.0.0
 
 ## Find Us
 
