@@ -10,7 +10,7 @@ def send_email(subject, msg):
         server = smtplib.SMTP('smtp.gmail.com:587')
         server.ehlo()
         server.starttls()
-        server.login("impowaste39@gmail.com","Letsfuck39")
+        server.login("impowaste39@gmail.com","<password>")
         message = 'Subject: {}\n\n{}'.format(subject, msg)
         server.sendmail("impowaste39@gmail.com", "impowaste39@gmail.com", message)
         server.quit()
